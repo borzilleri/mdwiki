@@ -1,0 +1,48 @@
+body {
+  color                 : black;
+  background-color      : white;
+}
+a {
+  text-decoration       : none;
+}
+a:hover {
+  text-decoration       : underline;
+}
+a:active {
+  color                 : #33C;
+}
+a:visited {
+}
+
+#title {
+  font-size             : x-large;
+  text-align            : center;
+  border-bottom         : 1px solid grey;
+}
+
+#error {
+  color                 : red;
+  font-weight           : bold;
+}
+
+#pageLinks {
+  font-size             : small;
+  text-align            : center;
+  
+  width                 : 75%;
+  margin                : auto;
+  
+  border-top            : 1px solid #CCC;
+}
+#pageLinks a {
+  color                 : #777;
+}
+#pageLinks a:visited {
+  color                 : #777;
+}
+
+#timer {
+  color                 : grey;
+  font-size             : x-small;
+  text-align            : center;
+}
