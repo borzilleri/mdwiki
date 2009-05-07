@@ -1,4 +1,7 @@
 <?
+/**
+ * $Id$
+ */
 $s_time = microtime(true);
 include(dirname(__FILE__).'/includes/inc/master.php');
 
