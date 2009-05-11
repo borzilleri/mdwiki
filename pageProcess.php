@@ -1,21 +1,34 @@
 <?php
 include('autohandler.php');
 $error = false;
-$page = new Page(@$_REQUEST['page']);
-if( 'save' == $action ) {
-  if( !empty($_REQUEST['pageDelete']) ) {
-    $page->delete();
-    lodPage("/");
-  }
-  else {
+if( $login->isLoggedIn() ) {
+	$page = new Page(@$_REQUEST['page']);
+	if( 'save' == $action ) {
     $error = !$page->update();
-    if( !$error ) {
-      $page->save();
-      loadPage("/{$page->title}");
-    }
-  }
+	  if( !$error ) {
+	    $page->save();
+	    loadPage($page->getLink(true));
+	  }
+	}
+	elseif( 'add' == $action ) {
+		// If we're adding a page and the title has been suppplied
+		// Set it in the object.
+		// We have to strip out the first character, however, 
+		// as that -should- be a slash character from the redirect.
+		$page->setTitle(substr(@$_REQUEST['title'],1));
+	}
+	elseif( 'delete' == $action ) {
+		$page->delete();
+		loadPage("/");
+	}
 }
 ?>
+
+<? if(!$login->isLoggedIn()): ?>
+<div id="error">
+You are not authorized for this page.
+</div>
+<? else: ?>
 
 <? if($error): ?>
 <div id="error">
@@ -23,23 +36,22 @@ An error occured, please try again.
 </div>
 <? endif; ?>
 <form method="POST" action="http://<?=SITE_ROOT;?>/save">
+<input name="action" type="hidden" value="save" />
+<div id="PageEditForm">
+  <div><label for="pageTitle">Page Title:</label>
+		<input name="pageTitle" type="text" size="30" maxlength="255" 
+			id="pageTitle" value="<?=$page->title;?>" />
+		<input type="submit" value="Save" />
   <? if( $page->exists() ): ?>
-  <input name="page" type="hidden" value="<?=$page->title;?>" />
-  <? endif;?>
-  <fieldset><legend>Page Info</legend>
-    <div><label for="pageDelete">Delete Page:</label>
-      <input name="pageDelete" type="checkbox" value="1" />
-    </div>
-    <div><label for="pageTitle">Page Title:</label>
-      <input name="pageTitle" type="text" size="30" maxlength="255" 
-        id="pageTitle" value="<?=$page->title;?>" />
-    </div>
-    
-    <div><label for="pageText">Page Text:</label>
-      <textarea id="pageText" name="pageText" rows="40" cols="80"><?=$page->text;?></textarea>
-    </div>
-    <input type="submit" value="Submit" />
-  </fieldset>
+		<input name="page" type="hidden" value="<?=$page->title;?>" />
+		<input name="action" type="submit" value="Delete" />
+	<? endif; ?>
+</div>  
+  <div class="clear">
+    <textarea id="pageText" name="pageText" rows="19" cols="80"><?=$page->text;?></textarea>
+  </div>
+</div>
 </form>
 
+<? endif; ?>
 <? include('footer.php'); ?>

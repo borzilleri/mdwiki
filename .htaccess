@@ -10,12 +10,12 @@ RewriteEngine On
 
 RewriteRule logout$ index.php?action=logout
 
-RewriteRule ^add$ pageProcess.php?action=add
-RewriteRule ^save$ pageProcess.php?action=save
+RewriteRule ^add(/.+)?$ pageProcess.php?action=add&title=$1
+RewriteRule ^save$ pageProcess.php
 RewriteRule ^page/(.*)/edit$ pageProcess.php?action=edit&page=$1
 
 # Base rule for rewriting actual pages
 # Because this is so generic, we use RewriteCond to make sure we don't 
 # overwrite anything.
 RewriteCond %{SCRIPT_FILENAME} !\.(html|php|css)$
-RewriteRule ^page/(.+)$ page.php?page=$1
+RewriteRule ^page/(.+?)(/.*)?$ page.php?page=$1

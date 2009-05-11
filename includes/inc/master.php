@@ -14,7 +14,7 @@ spl_autoload_register('autoLoad');
 define("BASE_PATH", dirname($_SERVER['SCRIPT_NAME']));
 define("HTTP_HOST", $_SERVER['HTTP_HOST']);
 define("SITE_ROOT", HTTP_HOST.BASE_PATH);
-$GLOBALS['action'] = empty($_REQUEST['action']) ? null : $_REQUEST['action'];
+$GLOBALS['action'] = empty($_REQUEST['action']) ? null : strtolower($_REQUEST['action']);
 
 /**
  * Start the session and begin output buffering.

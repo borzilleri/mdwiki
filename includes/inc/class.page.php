@@ -73,6 +73,10 @@ class Page {
   public function delete() {
     return unlink($this->getFilePath($this->title_loaded));
   }
+
+	public function getLink($rel = false) {
+		return (bool)$rel ? $this->getRelLink($this->title) : $this->getURI($this->title);
+	}
   
   public function getFilePath($pageTitle = null) {
     global $config;
@@ -104,6 +108,16 @@ class Page {
   public function exists() {
     return $this->status >= self::CLEAN;
   }
+
+	public function setTitle($pageTitle) {
+    $pageTitle = trim($pageTitle);
+    if( self::isValidTitle($pageTitle) ) {
+      if( $pageTitle != $this->title ) {
+        $this->title = $pageTitle;
+        $this->dirty();
+      }
+    }
+	}
   
   public function __get($var) {
     switch($var) {
@@ -129,9 +143,14 @@ class Page {
     if( preg_match('/^\w+$/', $pageTitle) ) return true;
     return false;
   }
+
+	public static function getRelLink($pageTitle) {
+		global $config;
+		return '/'.$config['pages_prefix'].'/'.$pageTitle;
+	}
   
   public  static function getURI($pageTitle) {
-    return 'http://'.SITE_ROOT.'/page/'.$pageTitle;
+		return 'http://'.SITE_ROOT.Page::getRelLink($pageTitle);
   }
   
   public static function getAllPages($titlesOnly = false) {
