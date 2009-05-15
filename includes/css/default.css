@@ -32,6 +32,12 @@ a:visited {
 }
 #login {
 	float									: right;
+	font-size             : small;
+}
+#login input {
+  font-size             : small;
+  padding               : 0;
+	margin                : 0;
 }
 
 #error {

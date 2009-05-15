@@ -38,17 +38,21 @@ An error occured, please try again.
 <form method="POST" action="http://<?=SITE_ROOT;?>/save">
 <input name="action" type="hidden" value="save" />
 <div id="PageEditForm">
+  <a name='form'></a>
   <div><label for="pageTitle">Page Title:</label>
 		<input name="pageTitle" type="text" size="30" maxlength="255" 
-			id="pageTitle" value="<?=$page->title;?>" />
-		<input type="submit" value="Save" />
+			id="pageTitle" tabindex="1" accesskey="t"
+			value="<?=$page->title;?>" />
+		<input type="submit" value="Save" tabindex="3" accesskey="s" />
   <? if( $page->exists() ): ?>
 		<input name="page" type="hidden" value="<?=$page->title;?>" />
-		<input name="action" type="submit" value="Delete" />
+		<input name="action" type="submit" value="Delete" 
+		  tabindex="4" accesskey="d" />
 	<? endif; ?>
 </div>  
   <div class="clear">
-    <textarea id="pageText" name="pageText" rows="19" cols="80"><?=$page->text;?></textarea>
+    <textarea id="pageText" name="pageText" rows="19" cols="80" 
+		 tabindex="2" accesskey="b"><?=$page->text;?></textarea>
   </div>
 </div>
 </form>
