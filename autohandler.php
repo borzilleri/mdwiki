@@ -1,6 +1,11 @@
 <?
 /**
  * $Id$
+ * 
+ * @TODO:
+ * - Add Markdown 'hints' to the page edit form (right hand side?)
+ * - perhaps move list/new/edit links the right side, along with the
+ * login form
  */
 $s_time = microtime(true);
 include(dirname(__FILE__).'/includes/inc/master.php');
