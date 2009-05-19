@@ -58,7 +58,7 @@ a:visited {
 #PageEditForm {
 	margin                : auto;
 }
-#MarkdownTutorial {
+#MarkdownCheatSheet {
   float                 : right;
 }
 
@@ -67,6 +67,6 @@ a:visited {
 	text-align            : right;
 }
 
-.clearLeft {
-	clear                 : left;
+.clear {
+	clear                 : both;
 }
