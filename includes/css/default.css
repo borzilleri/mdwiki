@@ -1,6 +1,7 @@
 body {
   color                 : black;
   background-color      : white;
+  width                 : 725px;
 }
 a {
   text-decoration       : none;
@@ -24,6 +25,7 @@ a:visited {
   padding               : .5em 0 0 0;
 	margin                : .5em auto 0 auto;
 	width                 : 75%;
+	clear                 : both;
 
 	color                 : grey;
 	font-size             : x-small;

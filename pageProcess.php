@@ -37,9 +37,8 @@ An error occured, please try again.
 <? endif; ?>
 
 <div id="MarkdownCheatSheet">
-<?=Markdown(file_get_contents('includes/inc/md.text'));?>
+  <?=Markdown(file_get_contents('includes/inc/md.text'));?>
 </div>
-
 
 <form method="POST" action="http://<?=SITE_ROOT;?>/save">
 <input name="action" type="hidden" value="save" />
@@ -55,13 +54,11 @@ An error occured, please try again.
 		<input name="action" type="submit" value="Delete" 
 		  tabindex="4" accesskey="d" />
 	<? endif; ?>
-</div>  
-  <div>
-    <textarea id="pageText" name="pageText" rows="19" cols="78" 
-		 tabindex="2" accesskey="b"><?=$page->text;?></textarea>
   </div>
+  <div><textarea id="pageText" name="pageText" rows="19" cols="78" 
+	 tabindex="2" accesskey="b" style="align: left;"><?=$page->text;?></textarea>
+	</div>
 </div>
 </form>
-
 <? endif; ?>
 <? include('footer.php'); ?>
