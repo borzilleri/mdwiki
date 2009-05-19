@@ -35,6 +35,11 @@ You are not authorized for this page.
 An error occured, please try again.
 </div>
 <? endif; ?>
+
+<div id="MarkdownTutorial">
+<?=Markdown(file_get_contents('includes/inc/md.text'));?>
+</div>
+
 <form method="POST" action="http://<?=SITE_ROOT;?>/save">
 <input name="action" type="hidden" value="save" />
 <div id="PageEditForm">
@@ -50,7 +55,7 @@ An error occured, please try again.
 		  tabindex="4" accesskey="d" />
 	<? endif; ?>
 </div>  
-  <div class="clear">
+  <div class="clearLeft">
     <textarea id="pageText" name="pageText" rows="19" cols="80" 
 		 tabindex="2" accesskey="b"><?=$page->text;?></textarea>
   </div>

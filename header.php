@@ -10,8 +10,10 @@
 	<? else: ?>
 	<form method="POST" action="http://<?=HTTP_HOST;?><?=$_SERVER['REQUEST_URI'];?>">
 		<input name="action" type="hidden" value="login" />
-		u:<input name="username" type="text" size="10" maxlength="255" accesskey="u"/>
-		p:<input name="password" type="password" size="10" maxlength="255" accesskey="p"/>
+		u:<input name="username" type="text" size="10" maxlength="255" 
+		  accesskey="u"/>
+		p:<input name="password" type="password" size="10" maxlength="255" 
+		  accesskey="p"/>
 		<input type="submit" value="login" />
 	</form>
 	<? endif; ?>

@@ -58,12 +58,15 @@ a:visited {
 #PageEditForm {
 	margin                : auto;
 }
+#MarkdownTutorial {
+  float                 : right;
+}
 
 #timer {
 	float                 : right;
 	text-align            : right;
 }
 
-.clear {
-	clear                 : both;
+.clearLeft {
+	clear                 : left;
 }
