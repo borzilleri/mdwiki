@@ -22,7 +22,6 @@ class Page {
     }
   }
   
-  
   public function load($pageTitle) {
     $file_path = $this->getFilePath($pageTitle);
     if( is_readable($file_path) && is_file($file_path) ) {
@@ -151,7 +150,7 @@ class Page {
     return $config['pages_prefix'].'/'.$pageTitle;
   }
   
-  public  static function getURI($pageTitle) {
+  public static function getURI($pageTitle) {
     return SITE_URI.Page::getRelativeURI($pageTitle);
   }
   

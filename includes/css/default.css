@@ -16,30 +16,30 @@ a:visited {
 }
 
 #Header {
-	margin								: 0 0 .5em 0;
-	padding-bottom				: .5em;
-	border-bottom					: 1px solid #CCC;
+  margin                : 0 0 .5em 0;
+  padding-bottom        : .5em;
+  border-bottom         : 1px solid #CCC;
 }
 
 #Footer {
   padding               : .5em 0 0 0;
-	margin                : .5em auto 0 auto;
-	width                 : 75%;
-	clear                 : both;
+  margin                : .5em auto 0 auto;
+  width                 : 75%;
+  clear                 : both;
 
-	color                 : grey;
-	font-size             : x-small;
+  color                 : gray;
+  font-size             : x-small;
 
-	border-top            : 1px solid #CCC;
+  border-top            : 1px solid #CCC;
 }
 #login {
-	float									: right;
-	font-size             : small;
+  float                 : right;
+  font-size             : small;
 }
 #login input {
   font-size             : small;
   padding               : 0;
-	margin                : 0;
+  margin                : 0;
 }
 
 #error {
@@ -58,17 +58,23 @@ a:visited {
 }
 
 #PageEditForm {
-	margin                : auto;
+  margin                : auto;
 }
 #MarkdownCheatSheet {
+	border-top            : 1px dashed #CCC;
+	border-bottom         : 1px dashed #CCC;
   float                 : right;
 }
 
-#timer {
+#validation {
 	float                 : right;
 	text-align            : right;
 }
+#timer {
+  float                 : right;
+  text-align            : right;
+}
 
 .clear {
-	clear                 : both;
+  clear                 : both;
 }
