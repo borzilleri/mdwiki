@@ -27,10 +27,9 @@ function autoLoad($class) {
  * @param bool $include_query whether to include the current QUERY_STRING.
  */
 function loadPage($path, $include_query = false) {
-    $http = !empty($_SERVER['HTTPS']) ? 'https' : 'http';
     // TODO Clean up query?
     $query = $_SERVER['QUERY_STRING'];    
-    header("Location: {$http}://".SITE_ROOT.$path.($include_query?"?{$query}":""));
+    header("Location: ".SITE_URI.$path.($include_query?"?{$query}":""));
     exit;
 }
 ?>

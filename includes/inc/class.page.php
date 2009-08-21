@@ -74,9 +74,9 @@ class Page {
     return unlink($this->getFilePath($this->title_loaded));
   }
 
-	public function getLink($rel = false) {
-		return (bool)$rel ? $this->getRelLink($this->title) : $this->getURI($this->title);
-	}
+  public function getLink($rel = false) {
+    return (bool)$rel ? $this->getRelativeURI($this->title) : $this->getURI($this->title);
+  }
   
   public function getFilePath($pageTitle = null) {
     global $config;
@@ -93,7 +93,9 @@ class Page {
   }
   
   protected function fixRelativeLinks($text) {
-    return preg_replace('/<a href="\/(\w+)"/', '<a href="'.BASE_PATH.'/page/$1"', $text);
+    global $config;
+    return preg_replace('/<a href="\/(\w+)"/', 
+      '<a href="'.SITE_URI.$config['pages_prefix'].'/$1"', $text);
   }
     
   protected function dirty() {
@@ -109,7 +111,7 @@ class Page {
     return $this->status >= self::CLEAN;
   }
 
-	public function setTitle($pageTitle) {
+  public function setTitle($pageTitle) {
     $pageTitle = trim($pageTitle);
     if( self::isValidTitle($pageTitle) ) {
       if( $pageTitle != $this->title ) {
@@ -117,7 +119,7 @@ class Page {
         $this->dirty();
       }
     }
-	}
+  }
   
   public function __get($var) {
     switch($var) {
@@ -144,13 +146,13 @@ class Page {
     return false;
   }
 
-	public static function getRelLink($pageTitle) {
-		global $config;
-		return '/'.$config['pages_prefix'].'/'.$pageTitle;
-	}
+  public static function getRelativeURI($pageTitle) {
+    global $config;
+    return $config['pages_prefix'].'/'.$pageTitle;
+  }
   
   public  static function getURI($pageTitle) {
-		return 'http://'.SITE_ROOT.Page::getRelLink($pageTitle);
+    return SITE_URI.Page::getRelativeURI($pageTitle);
   }
   
   public static function getAllPages($titlesOnly = false) {

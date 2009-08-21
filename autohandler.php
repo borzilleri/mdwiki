@@ -22,7 +22,7 @@ if( 'logout' == $action ) {
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="generator" content="BBEdit 9.1" />
 	<link rel="stylesheet" media="screen" charset="utf-8"
-	  href="http://<?=SITE_ROOT;?>/includes/css/default.css" />
+	  href="<?=SITE_URI;?>/includes/css/default.css" />
 
 	<title>mdwiki</title>
 </head>

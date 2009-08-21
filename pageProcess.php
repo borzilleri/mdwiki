@@ -40,7 +40,7 @@ An error occured, please try again.
   <?=Markdown(file_get_contents('includes/inc/md.text'));?>
 </div>
 
-<form method="POST" action="http://<?=SITE_ROOT;?>/save">
+<form method="POST" action="<?=SITE_URI;?>/save">
 <input name="action" type="hidden" value="save" />
 <div id="PageEditForm">
   <a name='form'></a>

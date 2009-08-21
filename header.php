@@ -6,7 +6,7 @@
 <div id="Header">
 	<div id="login">
 	<? if( $login->isLoggedIn() ): ?>
-		<a href="http://<?=SITE_ROOT;?>/logout">logout</a>
+		<a href="<?=SITE_URI;?>/logout">logout</a>
 	<? else: ?>
 	<form method="POST" action="http://<?=HTTP_HOST;?><?=$_SERVER['REQUEST_URI'];?>">
 		<input name="action" type="hidden" value="login" />
@@ -20,9 +20,9 @@
 	</div>
 
 	<div id="pageLinks">
-		[ <a href="http://<?=SITE_ROOT;?>" accesskey="l">list</a>
+		[ <a href="<?=SITE_URI;?>" accesskey="l">list</a>
 	<? if($login->isLoggedIn()): ?>
-		| <a href="http://<?=SITE_ROOT;?>/add#form" accesskey="n">new</a>
+		| <a href="<?=SITE_URI;?>/add#form" accesskey="n">new</a>
 		<? if( !empty($_REQUEST['page']) ): ?>
 		| <a href="<?=Page::getURI($_REQUEST['page']);?>/edit#form" accesskey="e">edit</a> 
 	  <? endif; ?>
