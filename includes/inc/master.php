@@ -26,12 +26,12 @@ define("HTTP_HOST", $_SERVER['HTTP_HOST']);
  * Contains an intial slash, regardless, if that is the entirety of the path
  * it also becomes the trailing slash.
  */
-define("BASE_PATH", dirname($_SERVER['SCRIPT_NAME']));
+define("BASE_PATH", rtrim(dirname($_SERVER['SCRIPT_NAME']),'/'));
 
 /**
  * Root URI for the site, a combination of the above two constants.
  */
-define("SITE_URI", 'http://'.HTTP_HOST.BASE_PATH.(strlen(BASE_PATH)>1?'/':''));
+define("SITE_URI", 'http://'.HTTP_HOST.BASE_PATH);
 
 /**
  *

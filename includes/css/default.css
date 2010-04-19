@@ -2,6 +2,7 @@ body {
   color                 : black;
   background-color      : white;
   width                 : 725px;
+	margin                : 10px auto;
 }
 a {
   text-decoration       : none;
@@ -24,7 +25,6 @@ a:visited {
 #Footer {
   padding               : .5em 0 0 0;
   margin                : .5em auto 0 auto;
-  width                 : 75%;
   clear                 : both;
 
   color                 : gray;
@@ -50,10 +50,10 @@ a:visited {
 #pageLinks {
 
 }
-#pageLinks a {
+#pageLinks a, #Tags a {
   color                 : #777;
 }
-#pageLinks a:visited {
+#pageLinks a:visited #Tags a:visited {
   color                 : #777;
 }
 
@@ -73,6 +73,58 @@ a:visited {
 #timer {
   float                 : right;
   text-align            : right;
+}
+
+#tagBlock {
+	margin-bottom         : 5px;
+}
+#existingTagList {
+	list-style-type       : none;
+	margin                : 0;
+	padding               : 0;
+	display               : inline;
+}
+#existingTagList li {
+	margin                : 1px 2px;
+	padding               : 1px 2px;
+	display               : inline;
+	cursor                : pointer;
+	border-bottom         : 1px dotted #FAA;
+}
+#existingTagList li.hasTag {
+	cursor                : no-drop;
+	background-color      : #DDF;
+	border-bottom         : 1px dotted #00F;
+}
+
+#Tags {
+	font-size             : small;
+	background-color      : #FAFAFF;
+	border                : 1px dashed #CCC;
+	padding               : 5px;
+	margin                : 0;
+}
+#Tags ul {
+	display               : inline;
+	list-style-type       : none;
+	margin                : 0;
+	padding               : 0;
+}
+#Tags li {
+	display               : inline;
+	margin                : 0;
+	padding               : 0 5px 0 3px;
+	border-right          : 1px solid #333;
+}
+#Tags li:last-child {
+	border                : none;
+}
+
+.help {
+	cursor                : help;
+	color                 : #777;
+	font-weight           : bold;
+	font-size             : small;
 }
 
 .clear {

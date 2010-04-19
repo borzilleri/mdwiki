@@ -22,6 +22,8 @@ if( $login->isLoggedIn() ) {
     loadPage("/");
   }
 }
+
+$tagList = Tag::getTagList($page->title);
 ?>
 
 <? if(!$login->isLoggedIn()): ?>
@@ -43,8 +45,7 @@ An error occured, please try again.
 <form method="post" action="<?=SITE_URI;?>/save">
 <div id="PageEditForm">
   <input name="action" type="hidden" value="save" />
-  <a name='form'></a>
-  <div><label for="pageTitle">Page Title:</label>
+  <div id="form"><label for="pageTitle">Page Title:</label>
     <input name="pageTitle" type="text" size="30" maxlength="255" 
       id="pageTitle" tabindex="1" accesskey="t"
       value="<?=$page->title;?>" />
@@ -58,6 +59,19 @@ An error occured, please try again.
   <div><textarea id="pageText" name="pageText" rows="19" cols="78" 
    tabindex="2" accesskey="b" style="align: left;"><?=$page->text;?></textarea>
   </div>
+	<div id="tagBlock">
+		<label>Tags:</label>
+		<ul id="existingTagList">
+		<? foreach($tagList as $tag): ?>
+			<li class="<?=$tag['hasTag']?'hasTag':'';?>"><?=$tag['name'];?></li>
+		<? endforeach; ?>
+		</ul>
+	</div>
+	<div id="newTagBlock">
+		<label for="textTags">New Tags:</label>
+		<input type="text" name="textTags" id="textTags" size="75" />
+		<span class="help" title="A comma-delimited list of new tags to create and add to this document. To add or remove an existing tag, click the tag name below.">?</span>
+	</div>
 </div>
 </form>
 <? endif; ?>

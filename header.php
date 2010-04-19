@@ -3,6 +3,7 @@
  * $Id$
  */
 ?>
+<div id="OuterContent">
 <div id="Header">
   <div id="login">
   <? if( $login->isLoggedIn() ): ?>
@@ -24,6 +25,7 @@
   </div>
   <div id="pageLinks">
     [ <a href="<?=SITE_URI;?>" accesskey="l">list</a>
+		| <a href="<?=SITE_URI;?>/tags" accesskey="t">tags</a>
   <? if($login->isLoggedIn()): ?>
     | <a href="<?=SITE_URI;?>/add#form" accesskey="n">new</a>
     <? if( !empty($_REQUEST['page']) ): ?>
@@ -31,6 +33,6 @@
         accesskey="e">edit</a> 
 	  <? endif; ?>
   <? endif; ?> ]
-  </div>
+  </div><!-- /#pageLinks -->
   <div class="clear"></div>
-</div>
+</div><!-- /#Header -->
