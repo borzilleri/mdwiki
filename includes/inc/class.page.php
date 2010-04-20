@@ -35,10 +35,16 @@ class Page {
 	}
 	
 	public function loadTags() {
-		$this->tags = Tag::getTagList($this->title, false);
+		$tags = array();
+		$list = Tag::getTagList($this->title, false);
+		foreach($list as $tag) {
+			$tags[] = $tag['name'];
+		}
+		$this->tags = $tags;
 	}
 	
 	public function update() {
+		// Set page title.
 		$pageTitle_tmp = trim(@$_REQUEST['pageTitle']);
 		if( self::isValidTitle($pageTitle_tmp) ) {
 			if( $pageTitle_tmp != $this->title ) {
@@ -53,10 +59,28 @@ class Page {
 			return false;
 		}
 		
+		// Set Page Text
 		$pageText_tmp = trim(@$_REQUEST['pageText']);
 		if( $pageText_tmp != $this->text ) {
 				$this->text = $pageText_tmp;
 				$this->dirty();
+		}
+		
+		// Set Page Tags
+		$tagArray = explode(',',rtrim(ltrim(@$_REQUEST['tags'],','),','));
+		foreach($this->tags as $k => $tag) {
+			$ta_k = array_search($tag, $tagArray);
+			if( false === $ta_k ) {
+				unset($this->tags[$k]);
+				$this->dirty();
+			}
+			else {
+				unset($tagArray[$ta_k]);
+			}
+		}
+		foreach($tagArray as $tag) {
+			$this->tags[] = $tag;
+ 			$this->dirty();
 		}
 		
 		return true;
@@ -64,7 +88,7 @@ class Page {
 	
 	public function save() {
 		if( $this->isClean() ) return;
-		
+				
 		if( $this->exists() && $this->title_loaded != $this->title ) {
 			/**
 			 * @todo Probably want to check this for errors.
@@ -73,6 +97,9 @@ class Page {
 		}
 		
 		file_put_contents($this->getFilePath(), $this->text);
+				
+		// Update Tags.
+		Tag::updatePageTags($this->title_loaded, $this->title, $this->tags);
 	}
 	
 	public function delete() {
@@ -80,7 +107,8 @@ class Page {
 	}
 
 	public function getLink($rel = false) {
-		return (bool)$rel ? $this->getRelativeURI($this->title) : $this->getURI($this->title);
+		return (bool)$rel ? 
+			$this->getRelativeURI($this->title) : $this->getURI($this->title);
 	}
 	
 	public function getFilePath($pageTitle = null) {
@@ -101,7 +129,7 @@ class Page {
 	protected function fixRelativeLinks($text) {
 		global $config;
 		return preg_replace('/<a href="\/(\w+)"/', 
-			'<a href="'.SITE_URI.$config['pages_prefix'].'/$1"', $text);
+			'<a href="'.SITE_URI.'/'.$config['pages_prefix'].'/$1"', $text);
 	}
 		
 	protected function dirty() {
@@ -166,11 +194,11 @@ class Page {
 
 	public static function getRelativeURI($pageTitle) {
 		global $config;
-		return $config['pages_prefix'].'/'.$pageTitle;
+		return '/'.$config['pages_prefix'].'/'.$pageTitle;
 	}
 	
 	public static function getURI($pageTitle) {
-		return SITE_URI.'/'.Page::getRelativeURI($pageTitle);
+		return SITE_URI.Page::getRelativeURI($pageTitle);
 	}
 	
 	public static function getAllPages($titlesOnly = false) {

@@ -77,17 +77,20 @@ class Tag {
 		
 		if( !is_null($page) ) {
 			if( $allTags ) {
-				$query = self::$db->prepare('SELECT t.name,t.parent,p.page as hasTag 
+				$query = self::$db->prepare(
+					'SELECT t.name,t.parent,(p.page=:page) as hasTag 
 					FROM tags as t
 					LEFT JOIN pageTags as p ON (p.tag=t.name)
-					WHERE p.page IS NULL OR p.page=:page
-					ORDER BY t.name ASC');
+					ORDER BY t.name ASC'
+				);
 			}
 			else {
-				$query = self::$db->prepare('SELECT t.name,t.parent,p.page as hasTag
+				$query = self::$db->prepare(
+					'SELECT t.name,t.parent,p.page as hasTag
 					FROM tags as t
 					INNER JOIN pageTags as p ON (p.tag=t.name)
-					WHERE page=:page');
+					WHERE page=:page'
+				);
 			}
 			$query->bindValue(':page', $page);
 			$result = $query->execute();
@@ -100,6 +103,23 @@ class Tag {
 			$tags[] = $row;
 		}
 		return $tags;
+	}
+	
+	public static function updatePageTags($oldPage, $newPage, $tags) {
+		self::initializeConnection();
+		
+		$query = self::$db->prepare('DELETE FROM pageTags WHERE page=:page');
+		$query->bindValue(':page',$oldPage);
+		$query->execute();
+		
+		$query = self::$db->prepare(
+			'REPLACE INTO pageTags (page,tag) VALUES (:page,:tag)');
+		$query->bindValue(':page',$newPage);
+		foreach($tags as $t) {
+			$query->reset();
+			$query->bindValue(':tag', $t);			
+			$query->execute();
+		}
 	}
 }
 
