@@ -24,6 +24,7 @@ if( $login->isLoggedIn() ) {
 }
 
 $tagList = Tag::getTagList($page->title);
+$pageTags = '';
 ?>
 
 <? if(!$login->isLoggedIn()): ?>
@@ -42,7 +43,7 @@ An error occured, please try again.
   <?=Markdown(file_get_contents('includes/inc/md.text'));?>
 </div>
 
-<form method="post" action="<?=SITE_URI;?>/save">
+<form method="post" name="editForm" action="<?=SITE_URI;?>/save">
 <div id="PageEditForm">
   <input name="action" type="hidden" value="save" />
   <div id="form"><label for="pageTitle">Page Title:</label>
@@ -63,16 +64,36 @@ An error occured, please try again.
 		<label>Tags:</label>
 		<ul id="existingTagList">
 		<? foreach($tagList as $tag): ?>
-			<li class="<?=$tag['hasTag']?'hasTag':'';?>"><?=$tag['name'];?></li>
+			<li onclick="javascript:tagClick(this);" 
+				class="<?=$tag['hasTag']?'hasTag':'';?>"><?=$tag['name'];?></li>
+			<? $pageTags.=$tag['hasTag']?$tag['name'].',':''; ?>
 		<? endforeach; ?>
 		</ul>
+		<input type="hidden" name="tags" id="tags" value="<?=$pageTags;?>"/>
 	</div>
 	<div id="newTagBlock">
 		<label for="textTags">New Tags:</label>
 		<input type="text" name="textTags" id="textTags" size="75" />
-		<span class="help" title="A comma-delimited list of new tags to create and add to this document. To add or remove an existing tag, click the tag name below.">?</span>
+		<span class="help" title="A comma-delimited list of new tags to create and add to this document. To add or remove an existing tag, click the above tag name.">?</span>
 	</div>
 </div>
 </form>
+
+<script type="text/javascript" charset="utf-8">
+function tagClick(tagItem) {
+	var tagField = document.getElementById('tags');
+	var tagList = tagField.value;
+	
+	if( 'hasTag' == tagItem.className ) {
+		tagItem.className = '';
+		tagField.value = tagField.value.replace(tagItem.innerText+',','');
+	}
+	else {
+		tagItem.className = 'hasTag';
+		tagField.value += tagItem.innerText+',';
+	}
+}
+</script>
+
 <? endif; ?>
 <? include('footer.php'); ?>

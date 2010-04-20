@@ -93,7 +93,7 @@ class Tag {
 			$result = $query->execute();
 		}
 		else {
-			$result = self::$db->query('SELECT t.name,t.parent FROM tags as t');
+			$result = self::$db->query('SELECT t.name,t.parent,0 as hasTag FROM tags as t');
 		}
 		
 		while($row = $result->fetchArray($fetchMode)) {
