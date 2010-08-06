@@ -3,8 +3,8 @@
  * $Id$
  */
 ?>
-<div id="OuterContent">
-<div id="Header">
+<!--<div id="Header"> -->
+<header>
   <div id="login">
   <? if( $login->isLoggedIn() ): ?>
     <a href="<?=SITE_URI;?>/logout">logout</a>
@@ -35,4 +35,6 @@
   <? endif; ?> ]
   </div><!-- /#pageLinks -->
   <div class="clear"></div>
-</div><!-- /#Header -->
+<!--</div><!-- /#Header -->
+</header>
+<section id="mainContent">
