@@ -1,11 +1,7 @@
 <?php
-/**
- * $Id$
- * Page class
- *
- */
 
-class Page {	
+class Article {
+	protected static $parser = null;
 	const T_DIRTY = -1;
 	const CLEAN = 0;
 	const DIRTY = 1;
@@ -17,18 +13,21 @@ class Page {
 	
 	private $status = self::T_DIRTY;
 	
-	public function __construct($pageTitle = null) {
-		if( !empty($pageTitle) ) {
-			$this->load($pageTitle);
+	public function __construct($title = null) {
+		if( empty(self::$parser) ) {
+			self::$parser = new Markdown_Parser;
+		}
+		if( !empty($title) ) {
+			$this->load($title);
 			$this->loadTags();
 		}
 	}
 	
-	public function load($pageTitle) {
-		$file_path = $this->getFilePath($pageTitle);
+	public function load($title) {
+		$file_path = $this->getFilePath($title);
 		if( is_readable($file_path) && is_file($file_path) ) {
-			$this->title_loaded = $pageTitle;
-			$this->title = $pageTitle;
+			$this->title_loaded = $title;
+			$this->title = $title;
 			$this->text = file_get_contents($file_path);
 			$this->clean();
 		}
@@ -44,11 +43,11 @@ class Page {
 	}
 	
 	public function update() {
-		// Set page title.
-		$pageTitle_tmp = trim(@$_REQUEST['pageTitle']);
-		if( self::isValidTitle($pageTitle_tmp) ) {
-			if( $pageTitle_tmp != $this->title ) {
-				$this->title = $pageTitle_tmp;
+		// Set article title.
+		$title_tmp = trim(@$_REQUEST['articleTitle']);
+		if( self::isValidTitle($title_tmp) ) {
+			if( $title_tmp != $this->title ) {
+				$this->title = $title_tmp;
 				$this->dirty();
 			}
 		}
@@ -59,14 +58,14 @@ class Page {
 			return false;
 		}
 		
-		// Set Page Text
-		$pageText_tmp = trim(@$_REQUEST['pageText']);
-		if( $pageText_tmp != $this->text ) {
-				$this->text = $pageText_tmp;
+		// Set Article Text
+		$text_tmp = trim(@$_REQUEST['text']);
+		if( $text_tmp != $this->text ) {
+				$this->text = $text_tmp;
 				$this->dirty();
 		}
 		
-		// Set Page Tags
+		// Set Article Tags
 		$tagArray = explode(',',rtrim(ltrim(@$_REQUEST['tags'],','),','));
 		foreach($this->tags as $k => $tag) {
 			$ta_k = array_search($tag, $tagArray);
@@ -99,7 +98,7 @@ class Page {
 		file_put_contents($this->getFilePath(), $this->text);
 				
 		// Update Tags.
-		Tag::updatePageTags($this->title_loaded, $this->title, $this->tags);
+		Tag::updateArticleTags($this->title_loaded, $this->title, $this->tags);
 	}
 	
 	public function delete() {
@@ -111,25 +110,19 @@ class Page {
 			$this->getRelativeURI($this->title) : $this->getURI($this->title);
 	}
 	
-	public function getFilePath($pageTitle = null) {
-		global $config;
-		if( !empty($pageTitle) ) {
-			return $config['pages_path']."/{$pageTitle}.text";
-		}
-		else {
-			return $config['pages_path']."/{$this->title}.text";
-		}
+	public function getFilePath($title = null) {
+		return sliMVC::config('store.path')
+			.(empty($title)?"/{$this->title}.text":"/{$title}.text");
 	}
 	
 	public function render() {
-		$pageText = $this->fixRelativeLinks(Markdown($this->text));
-		return $pageText;
+		$text = $this->fixRelativeLinks(self::$parser->transform($this->text));
+		return $text;
 	}
 	
 	protected function fixRelativeLinks($text) {
-		global $config;
 		return preg_replace('/<a href="\/(\w+)"/', 
-			'<a href="'.SITE_URI.'/'.$config['pages_prefix'].'/$1"', $text);
+			'<a href="'.sliMVC::config('core.site_uri').'/'.sliMVC::config('core.page_prefix').'/$1"', $text);
 	}
 		
 	protected function dirty() {
@@ -145,11 +138,11 @@ class Page {
 		return $this->status >= self::CLEAN;
 	}
 
-	public function setTitle($pageTitle) {
-		$pageTitle = trim($pageTitle);
-		if( self::isValidTitle($pageTitle) ) {
-			if( $pageTitle != $this->title ) {
-				$this->title = $pageTitle;
+	public function setTitle($title) {
+		$title = trim($title);
+		if( self::isValidTitle($title) ) {
+			if( $title != $this->title ) {
+				$this->title = $title;
 				$this->dirty();
 			}
 		}
@@ -179,39 +172,37 @@ class Page {
 	}
 	
 	/**
-	 * Validates a page title
+	 * Validates an Article title
 	 *
-	 * A Page Title must contain only valid "word" characters.
+	 * An Article Title must contain only valid "word" characters.
 	 * eg: 0-9, a-z, A-Z, _
 	 *
-	 * @param string $pageTitle
+	 * @param string $title
 	 * @return bool
 	 */
-	public static function isValidTitle($pageTitle = "") {
-		if( preg_match('/^\w+$/', $pageTitle) ) return true;
+	public static function isValidTitle($title = "") {
+		if( preg_match('/^\w+$/', $title) ) return true;
 		return false;
 	}
 
-	public static function getRelativeURI($pageTitle) {
-		global $config;
-		return '/'.$config['pages_prefix'].'/'.$pageTitle;
+	public static function getRelativeURI($title) {
+		return '/'.sliMVC::config('core.page_prefix').'/'.$title;
 	}
 	
-	public static function getURI($pageTitle) {
-		return SITE_URI.Page::getRelativeURI($pageTitle);
+	public static function getURI($title) {
+		return sliMVC::config('core.site_uri').Article::getRelativeURI($title);
 	}
 	
-	public static function getAllPages($titlesOnly = false) {
-		global $config;
-		$pages = array();
-		$dir = scandir($config['pages_path']);
+	public static function getAllArticles($titlesOnly = false) {
+		$articles = array();
+		$dir = scandir(sliMVC::config('store.path'));
 		foreach($dir as $file) {
 			if( '.' != substr($file,0,1) && '.text' == substr($file,-5) ) {
 				$title = substr($file,0,-5);
-				$pages[] = $titlesOnly ? $title : new Page($title);
+				$articles[] = $titlesOnly ? $title : new Article($title);
 			}
 		}
-		return $pages;
+		return $articles;
 	}
 }
 

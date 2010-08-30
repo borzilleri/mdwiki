@@ -12,13 +12,11 @@ class Tag {
 		
 	protected static $db;
 	
-	protected static function initializeConnection() {
-		global $config;
+	protected static function initializeConnection() {		
+		self::$db = new SQLite3(sliMVC::config('store.path').'/'.self::DB_FILE_NAME);
 		
-		self::$db = new SQLite3($config['pages_path'].'/'.self::DB_FILE_NAME);
-			
 		if( self::$db ) {
-			self::buildTables();			
+			self::buildTables();
 		}
 		else {
 			/**
@@ -37,10 +35,10 @@ class Tag {
 		}
 	}
 	
-	public static function getPagesByTag($tag) {
+	public static function getArticlesByTag($tag) {
 		self::initializeConnection();
 		$andTags = explode('/',$tag);
-		$firstTag = explode(' ',rtrim(ltrim(array_shift($andTags))));
+		$firstTag = explode('+',rtrim(ltrim(array_shift($andTags))));
 		$i = 1;
 		
 		$baseSql = "SELECT p.page FROM pageTags as p ";
@@ -50,7 +48,7 @@ class Tag {
 		$wheres[] = sprintf("p.tag IN ('%s') ",implode("','",$firstTag));
 		
 		foreach($andTags as $atag) {
-			$orTags = explode(' ',rtrim(ltrim($atag)));
+			$orTags = explode('+',rtrim(ltrim($atag)));
 			$p_table = "p$i";
 			$i+=1;
 			
@@ -71,11 +69,11 @@ class Tag {
 		return $resultArray;
 	}
 	
-	public static function getTagList($page = null, $allTags = true, $fetchMode = SQLITE3_ASSOC) {
+	public static function getTagList($article = null, $allTags = true, $fetchMode = SQLITE3_ASSOC) {
 		self::initializeConnection();
 		$tags = array();
 		
-		if( !is_null($page) ) {
+		if( !is_null($article) ) {
 			if( $allTags ) {
 				$query = self::$db->prepare(
 					'SELECT t.name,t.parent,(p.page=:page) as hasTag 
@@ -92,7 +90,7 @@ class Tag {
 					WHERE page=:page'
 				);
 			}
-			$query->bindValue(':page', $page);
+			$query->bindValue(':page', $article);
 			$result = $query->execute();
 		}
 		else {
@@ -105,16 +103,16 @@ class Tag {
 		return $tags;
 	}
 	
-	public static function updatePageTags($oldPage, $newPage, $tags) {
+	public static function updateArticleTags($oldArticle, $newArticle, $tags) {
 		self::initializeConnection();
 		
 		$query = self::$db->prepare('DELETE FROM pageTags WHERE page=:page');
-		$query->bindValue(':page',$oldPage);
+		$query->bindValue(':page',$oldArticle);
 		$query->execute();
 		
 		$query = self::$db->prepare(
 			'REPLACE INTO pageTags (page,tag) VALUES (:page,:tag)');
-		$query->bindValue(':page',$newPage);
+		$query->bindValue(':page',$newArticle);
 		foreach($tags as $t) {
 			$query->reset();
 			$query->bindValue(':tag', $t);			
