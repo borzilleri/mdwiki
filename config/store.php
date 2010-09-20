@@ -1,5 +1,5 @@
 <?php
 
-$config['path'] = '/Users/jonathan/Projects/mdwiki/pages';
+$config['path'] = APP_ROOT.'/pages';
 
 ?>
