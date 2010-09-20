@@ -1,3 +1,8 @@
+<?php
+$header = new View('header');
+$header->pageTitle = $pageTitle;
+$header->render(true);
+?>
 <ul>
   <? foreach($tagList as $tag): ?>
   <li>
@@ -5,3 +10,4 @@
   </li>
 <? endforeach; ?>
 </ul>
+<?php $footer=new View('footer');$footer->render(true);?>

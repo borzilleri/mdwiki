@@ -10,11 +10,8 @@ class article_Controller extends Controller_Core {
 			return;
 		}
 		
-		$view = new View('page');
-		$view->pageTitle = $article->title;
-		$view->innerPage = new View('article_content');
-		$view->innerPage->article = $article;
-		
+		$view = new View('article_content');
+		$view->article = $article;
 		$view->render(true);
 	}
 	

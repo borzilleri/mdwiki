@@ -2,14 +2,10 @@
 
 class main_Controller extends Controller_Core {
 	function index() {
-		$articles = Article::getAllArticles(true);
-	
-		$view = new View('page');
-		$view->innerPage = new View('article_list');
-		
+		$view = new View('article_list');
 		$view->pageTitle = sliMVC::config('core.app_name');
-		$view->innerPage->pageList = $articles;
-		
+		$view->articleList = Article::getAllArticles(true);
+				
 		$view->render(true);
 	}
 }

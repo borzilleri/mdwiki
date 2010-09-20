@@ -5,16 +5,16 @@ class tags_Controller extends Controller_Core {
 		$view = new View('page');
 
 		if( empty($tag) ) {
-			$view->innerPage = new View('tag_list');
-			$view->innerPage->tagList = Tag::getTagList();
+			$view = new View('tag_list');
+			$view->tagList = Tag::getTagList();
 			$view->pageTitle = sliMVC::config('core.app_name').' - All Tags';
 		}
 		else {
-			$view->innerPage = new View('article_list');
-			$view->innerPage->articleList = Tag::getArticlesByTag($tag);
+			$view = new View('article_list');
+			$view->articleList = Tag::getArticlesByTag($tag);
 			$view->pageTitle = "Articles Tagged with '{$tag}'";
 		}
-		
+				
 		$view->render(true);
 	}
 	
