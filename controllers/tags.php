@@ -1,6 +1,6 @@
 <?php
 
-class tags_Controller extends Controller_Core {
+class tags_Controller extends MDController {
 	public function index($tag = null) {
 		$view = new View('page');
 

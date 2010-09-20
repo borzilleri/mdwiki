@@ -428,7 +428,6 @@ class Auth_OpenID_Consumer {
         $endpoint_data = $this->session->get($this->_token_key);
         $endpoint =
             $loader->fromSession($endpoint_data);
-
         $message = Auth_OpenID_Message::fromPostArgs($query);
         $response = $this->consumer->complete($message, $endpoint, 
                                               $current_url);

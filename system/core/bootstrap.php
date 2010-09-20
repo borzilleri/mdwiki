@@ -1,4 +1,5 @@
 <?php defined('SYS_ROOT') OR die('Direct script access prohibited');
+session_start();
 
 // Include & Register autoload Functions
 require_once(SYS_ROOT.'/core/constants.php');
