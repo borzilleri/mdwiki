@@ -1,3 +1,10 @@
+html {
+	font-size             : 100%;
+}
+html * {
+	margin                : 0;
+	padding               : 0;
+}
 body {
   color                 : black;
   background-color      : white;
@@ -16,10 +23,59 @@ a:active {
 a:visited {
 }
 
-header {
+body > header {
   margin                : 0 0 .5em 0;
   padding-bottom        : .5em;
   border-bottom         : 1px solid #CCC;
+}
+body > header h1 {
+	display               : inline;
+	font-weight           : normal;
+	font-size             : 1.5em;
+	margin-right          : 10px;
+}
+body > header nav {
+	display               : inline;
+}
+body > header ul {
+	list-style-type       : none;
+	display               : inline;
+}
+body > header li {
+	margin                : 0;
+	padding               : 0 5px;
+	display               : inline;
+	border-right          : 1px solid black;	
+}
+body > header li:first-child {
+	border-left           : 3px double black;
+}
+body > header li:last-child {
+	border-right          : 3px double black;
+}
+body > header nav a, #Tags a {
+  color                 : #777;
+}
+body > header nav a:visited, #Tags a:visited {
+  color                 : #777;
+}
+
+
+#authentication {
+  float                 : right;
+  font-size             : small;
+}
+#authentication input {
+  font-size             : small;
+}
+#authentication input[type="text"],
+#authentication input[type="password"] {
+	width: 50px;
+	border: 1px solid #999;
+}
+#authentication input[type="text"]:focus,
+#authentication input[type="password"]:focus {
+	width: 100px;
 }
 
 footer {
@@ -32,30 +88,13 @@ footer {
 
   border-top            : 1px solid #CCC;
 }
-#login {
-  float                 : right;
-  font-size             : small;
-}
-#login input {
-  font-size             : small;
-  padding               : 0;
-  margin                : 0;
-}
+
 
 #error {
   color                 : red;
   font-weight           : bold;
 }
 
-#pageLinks {
-
-}
-#pageLinks a, #Tags a {
-  color                 : #777;
-}
-#pageLinks a:visited #Tags a:visited {
-  color                 : #777;
-}
 
 #PageEditForm {
   margin                : auto;

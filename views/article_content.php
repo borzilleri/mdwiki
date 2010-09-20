@@ -4,11 +4,13 @@ $header->pageTitle = $article->title;
 $header->render(true);
 ?>
 <article>
-	<header>
-		<h1><?=$article->title;?></h1>
-	</header>
-	<?=$article->render();?>
-	<div id="Tags">
+	<section>
+		<?=$article->render();?>
+	</section>
+
+	<!-- Replies should go in <section> blogs in this area, probably. -->
+
+	<section id="Tags">
 		<a href="<?=sliMVC::config('core.site_uri');?>/tags">Tags</a>: 
 		<ul>
 		<? foreach($article->tags as $tag): ?>
@@ -17,6 +19,6 @@ $header->render(true);
 			</li>
 		<? endforeach; ?>
 		</ul>
-	</div>
+	</section>
 </article>
 <?php $footer=new View('footer');$footer->render(true);

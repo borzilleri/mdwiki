@@ -26,10 +26,10 @@ class OpenID extends Auth_OpenID_Consumer {
 
 		$store = new Auth_OpenID_FileStore($storePath);
 		parent::__construct($store);
-
-		if( !is_null($openIdModule) && $this->makeAuthModule($openIdModule) ) {
+		
+		if( !is_null($openIdModule) && $this->makeAuthModule($openIdModule) ) {			
 			$this->buildAuthRequest();
-		}
+		}		
 	}
 
 	protected function makeAuthModule($module) {
@@ -68,11 +68,12 @@ class OpenID extends Auth_OpenID_Consumer {
 
 	public function addRequestAttributes($attributes) {
 		if( !$this->status || !$this->_auth_req ) return false;
-
+		
 		$request_extension = $this->_auth_module->requestProfileFields($attributes);
 		if( $request_extension ) {
 			$this->_auth_req->addExtension($request_extension);
 		}
+		return true;
 	}
 
 	public function sendAuthRequest($callbackUri = null) {
@@ -93,7 +94,6 @@ class OpenID extends Auth_OpenID_Consumer {
 			// TODO: Make this SSL Aware
 			'http://'.$_SERVER['HTTP_HOST'], $callbackUri
 		);
-
 		header('Location: '.$redirectUri);
 		exit;
 	}
@@ -104,14 +104,13 @@ class OpenID extends Auth_OpenID_Consumer {
 			// TODO: Make this SSL Aware
 			$callbackUri = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];
 		}
-
 		$response = $this->complete($callbackUri);
 		$this->_response = $response;
 		$this->status = $response->status;
 		if( Auth_OpenID_SUCCESS !== $this->status ) return false;
 
 		// TODO: yeah, remove this eventually. good for debugging ATM though.
-		var_dump($response);
+		//var_dump($response);
 
 		if( (bool)$parseData ) {
 			$this->_response_data = $this->_auth_module->parseResponse($response);

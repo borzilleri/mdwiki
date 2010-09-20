@@ -1,6 +1,6 @@
 <?php
 
-class article_Controller extends Controller_Core {
+class article_Controller extends MDController {
 
 	public function index($title) {
 		$article = new Article($title);
