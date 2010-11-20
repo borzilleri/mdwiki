@@ -1,0 +1,42 @@
+#!/usr/bin/env php
+<?php
+define('APP_ROOT', dirname(dirname(__FILE__)));
+
+$no_db_access = true;
+
+require_once('Doctrine.php');
+require_once(APP_ROOT.'/config/doctrine.php');
+
+spl_autoload_register(array('Doctrine', 'autoload'));
+spl_autoload_register(array('Doctrine', 'modelsAutoload'));
+
+$doctrineSetup = function() use($config) {
+	$manager = Doctrine_Manager::getInstance();
+	// Set Doctrine attributes.
+	// TODO: Move these to a config file, or something?
+	$manager->setAttribute(Doctrine::ATTR_MODEL_LOADING, Doctrine::MODEL_LOADING_CONSERVATIVE);
+	$manager->setAttribute(Doctrine::ATTR_VALIDATE, Doctrine::VALIDATE_ALL);
+	$manager->setAttribute(Doctrine::ATTR_EXPORT, Doctrine::EXPORT_ALL);
+	$manager->setAttribute(Doctrine::ATTR_AUTOLOAD_TABLE_CLASSES, true);
+	$manager->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
+	
+	$connection = Doctrine_Manager::connection($config['dsn']);
+};
+$doctrineSetup();
+unset($doctrineSetup);
+Doctrine::loadModels($config['model_path']);
+
+// Configure Doctrine Cli
+// Normally these are arguments to the cli tasks but if they are set here the arguments will be auto-filled and are not required for you to enter them.
+
+$doctrine_config =array(
+	'data_fixtures_path'  =>  APP_ROOT.'/setup/fixtures',
+	'models_path'         =>  $config['model_path'],
+	'migrations_path'     =>  APP_ROOT.'/setup/migrations',
+	'sql_path'            =>  APP_ROOT.'/setup/fixtures',
+	'yaml_schema_path'    =>  APP_ROOT.'/setup/schema.yml'
+);
+
+$cli = new Doctrine_Cli($doctrine_config);
+$cli->run($_SERVER['argv']);
+?>

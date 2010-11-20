@@ -1,0 +1,209 @@
+Role:
+  Guest:
+    name: guest
+  Member:
+    name: member
+  Moderator:
+    name: moderator
+  Admin:
+    name: admin
+
+Task:
+  Article_List:
+    name: article_list
+  Article_Read:
+    name: article_read
+  Article_Edit:
+    name: article_edit
+  Article_Create:
+    name: article_create
+  Article_Delete:
+    name: article_delete
+  Article_Restore:
+    name: article_restore
+  Article_Tag_Add:
+    name: article_tag_add
+  Article_Tag_Delete:
+    name: article_Tag_delete
+
+  Tag_List:
+    name: tag_list
+  Tag_Edit:
+    name: tag_edit
+  Tag_Delete:
+    name: tag_delete
+
+  Comment_Create:
+    name: comment_create
+  Comment_Edit:
+    name: comment_edit
+  Comment_Edit_Other:
+    name: comment_edit_other
+  Comment_Delete:
+    name: comment_delete
+  Comment_Delete_Other:
+    name: comment_delete_other
+    
+  User_Add:
+    name: user_add
+  User_Edit:
+    name: user_edit
+  User_Delete:
+    name: user_delete
+  User_Ban:
+    name: user_ban
+
+RoleTask:
+  Guest1:
+    Role: Guest
+    Task: Article_List
+  Guest2:
+    Role: Guest
+    Task: Article_Read
+  Guest3:
+    Role: Guest
+    Task: Tag_List
+  
+  Member1:
+    Role: Member
+    Task: Article_List
+  Member2:
+    Role: Member
+    Task: Article_Read
+  Member3:
+    Role: Member
+    Task: Article_Edit
+  Member4:
+    Role: Member
+    Task: Article_Create
+  Member5:
+    Role: Member
+    Task: Article_Delete
+  Member6:
+    Role: Member
+    Task: Article_Tag_Add
+  Member7:
+    Role: Member
+    Task: Article_Tag_Delete
+  Member8:
+    Role: Member
+    Task: Tag_List
+  Member9:
+    Role: Member
+    Task: Comment_Create
+  Member10:
+    Role: Member
+    Task: Comment_Edit
+  Member11:
+    Role: Member
+    Task: Comment_Delete
+
+  Moderator1:
+    Role: Moderator
+    Task: Article_List
+  Moderator2:
+    Role: Moderator
+    Task: Article_Read
+  Moderator3:
+    Role: Moderator
+    Task: Article_Edit
+  Moderator4:
+    Role: Moderator
+    Task: Article_Create
+  Moderator5:
+    Role: Moderator
+    Task: Article_Delete
+  Moderator6:
+    Role: Moderator
+    Task: Article_Tag_Add
+  Moderator7:
+    Role: Moderator
+    Task: Article_Tag_Delete
+  Moderator8:
+    Role: Moderator
+    Task: Tag_List
+  Moderator9:
+    Role: Moderator
+    Task: Comment_Create
+  Moderator10:
+    Role: Moderator
+    Task: Comment_Edit
+  Moderator11:
+    Role: Moderator
+    Task: Comment_Delete
+  Moderator12:
+    Role: Moderator
+    Task: Article_Restore
+  Moderator13:
+    Role: Moderator
+    Task: Tag_Edit
+  Moderator14:
+    Role: Moderator
+    Task: Tag_Delete
+  Moderator15:
+    Role: Moderator
+    Task: Comment_Edit_Other
+  Moderator16:
+    Role: Moderator
+    Task: Comment_Delete_Other
+
+  Admin1:
+    Role: Admin
+    Task: Article_List
+  Admin2:
+    Role: Admin
+    Task: Article_Read
+  Admin3:
+    Role: Admin
+    Task: Article_Edit
+  Admin4:
+    Role: Admin
+    Task: Article_Create
+  Admin5:
+    Role: Admin
+    Task: Article_Delete
+  Admin6:
+    Role: Admin
+    Task: Article_Tag_Add
+  Admin7:
+    Role: Admin
+    Task: Article_Tag_Delete
+  Admin8:
+    Role: Admin
+    Task: Tag_List
+  Admin9:
+    Role: Admin
+    Task: Comment_Create
+  Admin10:
+    Role: Admin
+    Task: Comment_Edit
+  Admin11:
+    Role: Admin
+    Task: Comment_Delete
+  Admin12:
+    Role: Admin
+    Task: Article_Restore
+  Admin13:
+    Role: Admin
+    Task: Tag_Edit
+  Admin14:
+    Role: Admin
+    Task: Tag_Delete
+  Admin15:
+    Role: Admin
+    Task: Comment_Edit_Other
+  Admin16:
+    Role: Admin
+    Task: Comment_Delete_Other
+  Admin17:
+    Role: Admin
+    Task: User_Add
+  Admin18:
+    Role: Admin
+    Task: User_Edit
+  Admin19:
+    Role: Admin
+    Task: User_Delete
+  Admin20:
+    Role: Admin
+    Task: User_Ban

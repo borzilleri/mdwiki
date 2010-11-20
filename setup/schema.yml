@@ -1,0 +1,72 @@
+options:
+  collate: utf8_unicode_ci
+  charset: utf8
+
+ArticleTag:
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: 1
+    article: string(255)
+    tag: string(255)
+
+User:
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: 1
+    openid_guid: string(255)
+    firstName: string(255)
+    lastName: string(255)
+    email: string(255)
+    role_id: integer(8)
+  indexes:
+    openid:
+      fields:
+        openid_guid:
+          sorting: ASC
+      type: unique
+
+Role:
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: 1
+    name: string(255)
+  relations:
+    Tasks:
+      foreignAlias: Roles
+      class: Task
+      refClass: RoleTask
+
+Task:
+  columns:
+    id:
+      type: integer(8)
+      primary: true
+      autoincrement: true
+      unsigned: 1
+    name: string(255)
+
+
+RoleTask:
+  columns:
+    role_id:
+      type: integer(8)
+      unsigned: 1
+      primary: true
+    task_id:
+      type: integer(8)
+      unsigned: 1
+      primary: true
+  relations:
+    Role:
+      foreignAlias: RoleTasks
+    Task:
+      foreignAlias: RoleTasks

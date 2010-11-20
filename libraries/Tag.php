@@ -4,16 +4,14 @@
  *
  */
 
-class Tag {
-	const DB_FILE_NAME = 'tags.db';
-	
+class Tag {	
 	protected static $tags_CREATE = 'CREATE TABLE IF NOT EXISTS tags (name TEXT PRIMARY KEY ASC, parent TEXT REFERENCES tags(name))';
 	protected static $pageTags_CREATE = 'CREATE TABLE IF NOT EXISTS pageTags (page TEXT NOT NULL, tag TEXT REFERENCES tags(name))';
 		
 	protected static $db;
 	
 	protected static function initializeConnection() {		
-		self::$db = new SQLite3(sliMVC::config('store.path').'/'.self::DB_FILE_NAME);
+		self::$db = new SQLite3(sliMVC::config('store.db_file'));
 		
 		if( self::$db ) {
 			self::buildTables();
